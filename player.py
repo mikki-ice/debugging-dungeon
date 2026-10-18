@@ -31,6 +31,12 @@ class Player:
         self._hp -= amount
         return amount
 
+    # RIP
+    def death(self):
+        if self._hp <= 0:
+            return True
+        return False
+
     # calculate missing hp and heals to max_hp or less
     def heal(self, amount):
         missing_hp = self._max_hp - self._hp
