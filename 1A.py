@@ -1,16 +1,16 @@
 # premade map, list, each row is a string, each char is a column. top left is DUNGEON[0][0], bottom right DUNGEON[10][10], center DUNGEON[5][5]
 DUNGEON = [
-    "###########",
-    "#...#.....#", 
-    "###.#.###.#", # to find 4th field here, first we have to choose 3rd row and than 4th character in list. so Y3, X4 (minus one because zero indexed)
-    "#...#...#.#",  
-    "#.#####.#.#",
-    "#.......#.#", 
-    "#.#######.#",
-    "#.........#",
-    "#.#####.###",
-    "#.####..###", # second position here (dot) is Y[9] X[2]
-    "##########Q",
+    "■■■■■■■■■■■",
+    "■.△.■..▽..■", 
+    "■■■.■.■■■.■", # to find 4th field here, first we have to choose 3rd row and than 4th character in list. so Y3, X4 (minus one because zero indexed)
+    "■...■..▷■.■",  
+    "■◁■■■■■.■.■",
+    "■...▽...■.■", 
+    "■.■■■■■■■.■",
+    "■...◁..▷..■",
+    "■.■■■■■.■■■",
+    "■.■■■■.△■■■", # second position here (dot) is Y[9] X[2]
+    "■■■■■■■■■■■",
 ]
 # X = map width
 # Y = map heigth
@@ -32,7 +32,14 @@ player_pos_x = 1
 for posY, line in enumerate(DUNGEON, 0):
     for posX, tile in enumerate(line, 0):
         if posY == player_pos_y and posX == player_pos_x:
-            print(">", end="")
+            print("⏵", end="")
         else:
             print(tile, end="")
     print()
+
+print("⏵   ⯈")
+print("⏴   ⯇")
+print("⏶   ⯅")
+print("⏷   ⯆")
+
+
