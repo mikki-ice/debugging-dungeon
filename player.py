@@ -5,9 +5,9 @@ class Player:
         self._hp = 100
         self._level = 1
         self._xp = 0
-        self._attack = 10
+        self._attack = 20
         self._defense = 5
-        self._dexterity = 5
+        self._dexterity = 50
 
     # guards hp so it cannot be changed in other places 
     @property
@@ -21,6 +21,18 @@ class Player:
     @property
     def name(self):
         return self._name
+    
+    @property
+    def attack(self):
+        return self._attack
+
+    @property
+    def defense(self):
+        return self._defense
+
+    @property
+    def dexterity(self):
+        return self._dexterity
 
     # take damage equal or less than current hp
     def take_damage(self, amount):

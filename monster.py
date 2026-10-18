@@ -3,9 +3,9 @@ import random
 # monster typ templates
 MONSTERS = {
     "Rat": {
-        "max_hp": (5, 13),
+        "max_hp": (50, 80),
         "attack": (4, 5),
-        "defense": (0, 2),
+        "defense": (5, 9),
         "dexterity": (0, 1),
         "xp_reward": (8, 12),
     },
@@ -69,6 +69,18 @@ class Monster:
     @property
     def name(self):
         return self._name
+    
+    @property
+    def attack(self):
+        return self._attack
+
+    @property
+    def defense(self):
+        return self._defense
+
+    @property
+    def dexterity(self):
+        return self._dexterity
 
 # monster generator
 def generate_monster(monster_type):
@@ -96,7 +108,7 @@ def generate_monster(monster_type):
     return new_monster
 
 
-if __name__ == "__main__":     
+if __name__ == "__main__":
 
     template = MONSTERS["Rat"]
     hp_range = template["max_hp"]
