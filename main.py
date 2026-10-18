@@ -1,17 +1,21 @@
 import player
+import world
 
 def main():
     name = welcome("Character name: ")
     character = player.Player(name)
+    current_map = world.Map()
     show_help()
     # commands loop
     while True:
-        key = input("> ").strip()
-        if key == "1":
+        key = input("> ").strip().upper()
+        if key == "C":
             stats(character)
-        elif key == "2":
+        elif key == "H":
             show_help()
-        elif key == "3":
+        elif key == "M":
+            show_map(current_map)
+        elif key == "Q":
             goodbye(character)
             break
         else:
@@ -36,11 +40,13 @@ def stats(char):
     print(char)
 
 def show_help():
-    print("Available commands:\n1. stats | 2. help | 3. quit")
+    print("Available commands:\nC. stats | H. help | M. show map | Q. quit")
 
 def goodbye(char):
     print(f"Good bye {char.name}")
 
+def show_map(current_map):
+    print(current_map.display_map(), end="")
 
 
 if __name__ == "__main__":
