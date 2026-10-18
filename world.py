@@ -36,7 +36,7 @@ class Map:
             return False
         if not 0 <= x <= max_x:
             return False
-        # check if its a wall
+        # check if its a path
         if self._map[y][x] == ".":
             return True
         return False
@@ -73,12 +73,26 @@ class Map:
         turning = (facing_now - 1) % 4
         self._direction = self.DIRECTIONS[turning]
 
+    def move_forward(self):
+        front_x = self._player_pos_x
+        front_y = self._player_pos_y
+        if self._direction == "N":
+            front_y = front_y - 1
+        elif self._direction == "E":
+            front_x = front_x + 1
+        elif self._direction == "S":
+            front_y = front_y + 1
+        elif self._direction == "W":
+            front_x = front_x - 1
+        if self.is_walkable(front_x, front_y):
+            self._player_pos_y = front_y
+            self._player_pos_x = front_x
+            return True
+        return False
 
 
-
-        
 if __name__ == "__main__":         
-          
+
     print(DUNGEON[10][10])
     lengthY = len(DUNGEON) - 1
     print("lenY: ", lengthY)
@@ -86,3 +100,5 @@ if __name__ == "__main__":
     print("lenZ: ", lengthX)
     map1 = Map()
     print(map1.display_map())
+    print(map1.move_forward())
+    print(map1._direction)

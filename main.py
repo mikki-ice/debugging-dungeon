@@ -15,9 +15,20 @@ def main():
             show_help()
         elif key == "M":
             show_map(current_map)
-        elif key == "Q":
+        elif key == "QUIT":
             goodbye(character)
             break
+        elif key == "W":
+            if current_map.move_forward():
+                print("You move forward")
+            else:
+                print("You hit the wall!")
+        elif key == "D":
+            current_map.turn_right()
+            print("You turned right")
+        elif key == "A":
+            current_map.turn_left()
+            print("You turned left")
         else:
             show_help()
 
@@ -40,7 +51,9 @@ def stats(char):
     print(char)
 
 def show_help():
-    print("Available commands:\nC. stats | H. help | M. show map | Q. quit")
+    print("Available commands:\n"
+          "W A D to move\n"
+    "C. stats | H. help | M. show map | QUIT to quit")
 
 def goodbye(char):
     print(f"Good bye {char.name}")
