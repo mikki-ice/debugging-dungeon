@@ -35,17 +35,62 @@ def attack(attacker, defender):
     # return int, bool, bool
     return final_damage, dodge, critical
 
+def combat_round(character, enemy):
+    events = []
+    # player starts attack
+    dmg, dodge, crit = attack(character, enemy)
+    if dodge:
+        events.append(f"{enemy.name} dodged!")
+    elif dmg == 0:
+        events.append("You missed!")
+    elif crit:
+        events.append(f"CRITICAL HIT! You dealt {dmg} damage!")
+    else:
+        events.append(f"You dealt {dmg} damage!")
+    # check if enemy alive
+    if not enemy.is_alive:
+        status = "victory"
+        events.append(f"{enemy.name} defeated!")
+        return status, events
+    status = "continue"
+    # enemy attacks
+    dmg, dodge, crit = attack(enemy, character)
+    if dodge:
+        events.append("You dodged!")
+    elif dmg == 0:
+        events.append("Enemy missed!")
+    elif crit:
+        events.append(f"CRITICAL HIT! Enemy hits for {dmg} damage!")
+    else:
+        events.append(f"Enemy hits for {dmg} damage!")
+    # check if player alive
+    if not character.is_alive:
+        status = "defeated"
+        events.append(f"You have been defeated!")
+        return status, events
+    return status, events
+
+
+
+
+    # player_dead = False
+    # monster_dead = False
+    # attack(character, enemy)
+    # if not enemy.is_alive:
+    #     monster_dead = True
+    #     return monster_dead
+    # attack(enemy, character)
+    # if not character.is_alive:
+    #     player_dead = True
+    #     return player_dead
 
 if __name__ == "__main__":     
-    character = player.Player("Jelad")
+    plr = player.Player("Jelad")
     rat = monster.generate_monster("Rat")
 
-    print(rat)
-    print(attack(character, rat))
-    print(rat)
-    print(attack(character, rat))
-    print(rat)
-    print(attack(character, rat))
-    print(rat)
-    print(attack(character, rat))
-    print(rat)
+    print(plr.is_alive)
+    print(rat.is_alive)
+    print(combat_round(plr, rat))
+    print(plr.is_alive)
+    print(rat.is_alive)
+

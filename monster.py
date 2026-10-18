@@ -3,8 +3,8 @@ import random
 # monster typ templates
 MONSTERS = {
     "Rat": {
-        "max_hp": (50, 80),
-        "attack": (4, 5),
+        "max_hp": (20, 30),
+        "attack": (10, 12),
         "defense": (5, 9),
         "dexterity": (0, 1),
         "xp_reward": (8, 12),
@@ -46,12 +46,6 @@ class Monster:
         self._hp -= amount
         return amount
 
-    # check if hp is equal or less than 0
-    def is_alive(self):
-        if self._hp <= 0:
-            return False
-        return True
-
     def __str__(self):
         return (f"Monster type: {self._name}\n"
                 f"HP: {self._hp}/{self._max_hp}\n"
@@ -81,6 +75,10 @@ class Monster:
     @property
     def dexterity(self):
         return self._dexterity
+
+    @property 
+    def is_alive(self):
+        return self._hp > 0
 
 # monster generator
 def generate_monster(monster_type):
