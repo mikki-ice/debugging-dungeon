@@ -1,4 +1,4 @@
-class Player():
+class Player:
     def __init__(self, name):
         self._name = name
         self._max_hp = 100
@@ -13,26 +13,36 @@ class Player():
     @property
     def hp(self):
         return self._hp
-
+    # guards max hp
     @property
     def max_hp(self):
         return self._max_hp
 
+    @property
+    def name(self):
+        return self._name
+
     # take damage equal or less than current hp
     def take_damage(self, amount):
+        if amount < 0:
+            raise ValueError("negative damage")
         if amount > self._hp:
             amount = self._hp
-        else:
-            self._hp -= amount
+        self._hp -= amount
+        return amount
 
     # calculate missing hp and heals to max_hp or less
     def heal(self, amount):
         missing_hp = self._max_hp - self._hp
+        if amount < 0:
+            raise ValueError("negative heal")
+        # if full hp, do nothing
         if self._hp == self._max_hp:
-            pass
+            return 0
         elif amount > missing_hp:
             amount = missing_hp
         self._hp += amount
+        return amount
 
     def __str__(self):
         return (f"Name: {self._name}\n"
