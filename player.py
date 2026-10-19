@@ -5,9 +5,10 @@ class Player:
         self._hp = self._max_hp
         self._level = 1
         self._xp = 0
-        self._attack = 20
+        # self._xp_to_next = self.xp_to_next
+        self._attack = 10
         self._defense = 5
-        self._dexterity = 50
+        self._dexterity = 2
         self._hp_potions = 2
         self._hp_potions_max = 2
         self._hp_potion_regen = 0
@@ -21,7 +22,7 @@ class Player:
         self._hp -= amount
         return amount
 
-    # calculate missing hp and heals to max_hp or less if hp potion available
+    # calculate missing hp and heals to max_hp or less
     def heal(self, amount):
         missing_hp = self._max_hp - self._hp
         # check if negative amount
@@ -36,10 +37,11 @@ class Player:
         self._hp += amount 
         return amount
 
-    # using potion
+    # using potion (heals for percent of max hp)
     def use_hp_potion(self):
         if self._hp_potions > 0:
-            hp_heal = self._max_hp * 0.6
+            heals_for_percent = 0.45
+            hp_heal = self._max_hp * heals_for_percent
             hp_heal = round(hp_heal)
             healed = self.heal(hp_heal)
             self._hp_potions -= 1
@@ -53,7 +55,27 @@ class Player:
                 self._hp_potions += 1
                 self._hp_potion_regen = 0
                 
+    # leveling
+    def level_up(self):
+        self._level += 1
+        self._max_hp += 20
+        self._hp = self._max_hp
+        self._attack += 5
+        self._defense += 2
+        self._dexterity += 1
 
+    # add xp and run level_up
+    def add_xp(self, amount):  
+        added_levels = 0
+        # checks negative value
+        if amount < 0:
+            raise ValueError("negative XP")
+        self._xp += amount
+        while self._xp >= self.xp_to_next:
+            self._xp -= self.xp_to_next
+            self.level_up()
+            added_levels += 1
+        return added_levels
 
 
     def __str__(self):
@@ -61,7 +83,7 @@ class Player:
                 f"Level: {self._level}\n"
                 f"HP: {self._hp}/{self._max_hp}\n"
                 f"Attack: {self._attack} | Defense: {self._defense} | Dexterity: {self._dexterity}\n"
-                f"XP: {self._xp}"
+                f"XP: {self._xp}/{self.xp_to_next}"
         )
 
 
@@ -69,6 +91,7 @@ class Player:
     @property
     def hp(self):
         return self._hp
+    
     # guards max hp
     @property
     def max_hp(self):
@@ -97,3 +120,16 @@ class Player:
     @property
     def hp_potions(self):
         return self._hp_potions
+
+    @property
+    def xp_to_next(self):
+        return self._level * 100
+
+
+# testing random things
+if __name__ == "__main__":
+    char = Player("Warrior")
+    print(char)
+    levels_added = char.add_xp(9712)
+    print(char)
+    print(levels_added)

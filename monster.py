@@ -4,11 +4,11 @@ import random
 MONSTERS = {
     # lvl 1
     "SyntaxError": {
-        "max_hp": (50, 80),
+        "max_hp": (15, 22),
         "attack": (10, 12),
-        "defense": (5, 9),
+        "defense": (2, 4),
         "dexterity": (0, 1),
-        "xp_reward": (8, 12),
+        "xp_reward": (720, 950),
     },
     # lvl 1-2
     "TypeError": {
@@ -87,9 +87,15 @@ class Monster:
     def dexterity(self):
         return self._dexterity
 
+    # calculate value and returns
     @property 
     def is_alive(self):
         return self._hp > 0
+
+    # gives value to others 
+    @property
+    def xp_reward(self):
+        return self._xp_reward
 
 # monster generator
 def generate_monster(monster_type):
@@ -117,6 +123,7 @@ def generate_monster(monster_type):
     return new_monster
 
 
+# testing random things
 if __name__ == "__main__":
 
     template = MONSTERS["SyntaxError"]

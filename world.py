@@ -96,6 +96,7 @@ class Map:
         return self._move_forward
 
 
+# testing random things
 if __name__ == "__main__":         
 
     print(DUNGEON[10][10])

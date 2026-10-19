@@ -2,6 +2,8 @@ import monster
 import player
 import random
 import world
+import inflect
+p = inflect.engine()
 
 
 def attack(attacker, defender):
@@ -144,13 +146,20 @@ def start_combat(character, enemy):
         # combat finished
         elif status in ("victory", "defeated", "run"):
             break
+    # gain xp and level if victory
+    if status == "victory":
+        xp_gained = enemy.xp_reward
+        levels_amount = character.add_xp(xp_gained)
+        print(f"You gained {xp_gained} points of Python Experience!")
+        if levels_amount > 0:
+            print(f"You gained {levels_amount} {p.plural_noun('level', levels_amount)}!")
     return status
         
 
 
-
+# testing random things
 if __name__ == "__main__":     
-    plr = player.Player("Jelad")
+    plr = player.Player("Warrior")
     syntax_error1 = monster.generate_monster("SyntaxError")
 
     # print(plr.is_alive)
