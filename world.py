@@ -10,7 +10,7 @@ DUNGEON = [
     "#.........#",
     "#.#####.###",
     "#.####..###", # second position here (dot) is Y[9] X[2]
-    "##########Q",
+    "###########",
 ]
 # Y = line, whole string, map heigth 
 # X = one char in line string, map width

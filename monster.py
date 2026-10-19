@@ -4,7 +4,7 @@ import random
 MONSTERS = {
     # lvl 1
     "SyntaxError": {
-        "max_hp": (20, 30),
+        "max_hp": (50, 80),
         "attack": (10, 12),
         "defense": (5, 9),
         "dexterity": (0, 1),

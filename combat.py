@@ -37,9 +37,10 @@ def attack(attacker, defender):
 
 def combat_round(character, enemy, action):
     events = []
-    status = "" # continue, victory, defeated, run, invalid,  
+    status = "" # continue, victory, defeated, run, invalid, no potions 
 
     # player attacks
+    # adds first position to events list
     if action == "A":
         dmg, dodge, crit = attack(character, enemy)
         if dodge:
@@ -53,7 +54,7 @@ def combat_round(character, enemy, action):
         # check if enemy alive
         if not enemy.is_alive:
             status = "victory"
-            events.append(f"{enemy.name} defeated!")
+            events.append(f"{enemy.name} solved!")
             return status, events
         status = "continue"
     
@@ -61,7 +62,7 @@ def combat_round(character, enemy, action):
     elif action == "H":
         if character.hp_potions == 0:
             events.append("No coffee available")
-            status = "invalid"
+            status = "no potions"
             return status, events
         else:
             healed = character.use_hp_potion()
@@ -74,24 +75,27 @@ def combat_round(character, enemy, action):
         # higher than 50% chance to run away from combat
         if quit_roll > 40:
             status = "run"
-            events.append("You successfully posponed all issues")
+            events.append("You successfully postponed all issues!")
             return status, events
         else:
+            events.append("EscapeError: Could not escape!")
             status = "continue"
     else:
+        events.append("Wrong key")
         status = "invalid"
         return status, events
     
     # enemy attacks (after player attack/heal/unsuccessfull run)
+    # adds second position to events list
     dmg, dodge, crit = attack(enemy, character)
     if dodge:
         events.append("You dodged!")
     elif dmg == 0:
         events.append("Enemy missed!")
     elif crit:
-        events.append(f"CRITICAL HIT! Enemy hits for {dmg} damage!")
+        events.append(f"CRITICAL ERROR! {enemy.name} reduced Your sanity by {dmg}!")
     else:
-        events.append(f"Enemy hits for {dmg} damage!")
+        events.append(f"{enemy.name} reduced Your sanity by {dmg}!")
 
     # check if player alive
     if not character.is_alive:
@@ -100,24 +104,60 @@ def combat_round(character, enemy, action):
     return status, events
 
 
-    # player_dead = False
-    # monster_dead = False
-    # attack(character, enemy)
-    # if not enemy.is_alive:
-    #     monster_dead = True
-    #     return monster_dead
-    # attack(enemy, character)
-    # if not character.is_alive:
-    #     player_dead = True
-    #     return player_dead
+def start_combat(character, enemy):
+    round_number = 1
+    # start of combat, random encounter
+    print(f"An unexpected {enemy.name} appears!")
+    while True:
+        # prints basic stats
+        print("=====================================================")
+        print(f"Student Sanity: {character.hp}/{character.max_hp}")
+        print(f"{enemy.name} HP: {enemy.hp}/{enemy.max_hp}")
+        print()
+        print(f"Coffee available: {character.hp_potions}")
+        print("=====================================================")
+        # ask for input loop
+        while True:
+            print("[A] Debug | [H] Drink Coffee | [R] Run away from problems")
+            key_pressed = input("> ").strip().upper()
+
+            # start combat round
+            status, events = combat_round(character, enemy, key_pressed)
+
+            if status not in ("invalid", "no potions", "run"):
+                print(f"ROUND {round_number}")
+
+            for position in events:
+                print(position)
+            # coward
+            if status == "no potions":
+                continue
+            # invalid key
+            if status == "invalid":
+                continue
+
+            break
+        # continue combat
+        if status == "continue":
+            round_number += 1
+            continue
+        # combat finished
+        elif status in ("victory", "defeated", "run"):
+            break
+    return status
+        
+
+
 
 if __name__ == "__main__":     
     plr = player.Player("Jelad")
     syntax_error1 = monster.generate_monster("SyntaxError")
 
-    print(plr.is_alive)
-    print(syntax_error1.is_alive)
-    print(combat_round(plr, syntax_error1, "A"))
-    print(plr)
-    print(syntax_error1)
+    # print(plr.is_alive)
+    # print(syntax_error1.is_alive)
+    # print(combat_round(plr, syntax_error1, "A"))
+    # print(plr)
+    # print(syntax_error1)
 
+
+    start_combat(plr, syntax_error1)
