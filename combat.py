@@ -169,4 +169,4 @@ if __name__ == "__main__":
     # print(syntax_error1)
 
 
-    start_combat(plr, syntax_error1)
+    print(start_combat(plr, syntax_error1))

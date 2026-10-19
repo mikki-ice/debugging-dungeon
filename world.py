@@ -26,7 +26,6 @@ class Map:
         self._player_pos_x = start_pos_x
         self._player_pos_y = start_pos_y
         self._direction = self.DIRECTIONS[1]
-        self._move_forward = False
 
     def is_walkable(self, x, y):
         max_y = len(self._map) - 1
@@ -89,11 +88,8 @@ class Map:
             self._player_pos_y = front_y
             self._player_pos_x = front_x
             return True
-        return False
-
-    @property
-    def move_forward(self):
-        return self._move_forward
+        else:
+            return False
 
 
 # testing random things

@@ -1,6 +1,6 @@
 import random
 
-# monster typ templates
+# monster typ templates (nested dictionary) MONSTERS[name][atribute] to get names atribute value. /// 
 MONSTERS = {
     # lvl 1
     "SyntaxError": {
@@ -8,7 +8,7 @@ MONSTERS = {
         "attack": (10, 12),
         "defense": (2, 4),
         "dexterity": (0, 1),
-        "xp_reward": (720, 950),
+        "xp_reward": (15, 20),
     },
     # lvl 1-2
     "TypeError": {
@@ -126,13 +126,22 @@ def generate_monster(monster_type):
 # testing random things
 if __name__ == "__main__":
 
-    template = MONSTERS["SyntaxError"]
-    hp_range = template["max_hp"]
-    print(template)
-    print(hp_range)
-    print(hp_range[0], "|||", hp_range[1])
+    r_key = random.choice(list(MONSTERS))
+    print(r_key)
 
-    syntax_error1 = generate_monster("SyntaxError")
+    mons = MONSTERS["SyntaxError"]["attack"]
+    print(mons)
+    
+    # numb = 1
+    # random_m = MONSTERS[numb]
+    
+    # template = MONSTERS["SyntaxError"]
+    # hp_range = template["max_hp"]
+    # print(template)
+    # print(hp_range)
+    # print(hp_range[0], "|||", hp_range[1])
+
+    # syntax_error1 = generate_monster("SyntaxError")
 
 
-    print(syntax_error1)
+    # print(syntax_error1)

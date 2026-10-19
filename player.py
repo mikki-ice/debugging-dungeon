@@ -81,9 +81,9 @@ class Player:
     def __str__(self):
         return (f"Name: {self._name}\n"
                 f"Level: {self._level}\n"
-                f"HP: {self._hp}/{self._max_hp}\n"
-                f"Attack: {self._attack} | Defense: {self._defense} | Dexterity: {self._dexterity}\n"
-                f"XP: {self._xp}/{self.xp_to_next}"
+                f"Sanity: {self._hp}/{self._max_hp}\n"
+                f"Debug strength: {self._attack} | Defense: {self._defense} | Dexterity: {self._dexterity}\n"
+                f"Python Experience: {self._xp}/{self.xp_to_next}"
         )
 
 
@@ -128,7 +128,7 @@ class Player:
 
 # testing random things
 if __name__ == "__main__":
-    char = Player("Warrior")
+    char = Player("John")
     print(char)
     levels_added = char.add_xp(9712)
     print(char)

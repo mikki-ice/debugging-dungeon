@@ -1,13 +1,19 @@
+import combat
+import monster
+import random
 import player
 import world
 
+
+
+
 def main():
-    name = welcome("Character name: ")
+    name = welcome("Student name: ")
     character = player.Player(name)
     current_map = world.Map()
-    show_help()
     # commands loop
     while True:
+        show_help()
         key = input("> ").strip().upper()
         if key == "C":
             stats(character)
@@ -19,8 +25,16 @@ def main():
             goodbye(character)
             break
         elif key == "W":
+            # if move forward is possible, move and roll for random encounter
             if current_map.move_forward():
                 print("You move forward")
+                character.potion_regen()
+                status = random_encounter(character)
+                if status == "defeated":
+                    death(character)
+                    break
+                else:
+                    continue
             else:
                 print("You hit the wall!")
         elif key == "D":
@@ -38,8 +52,8 @@ def welcome(n):
     print("Welcome to my first text based RPG, have fun and please be gentle.")
     while True:
         player_name = input(n).strip().title()
-        if 4 > len(player_name) or len(player_name) > 12:
-            print("Name needs to be between 4 and 12 characters")
+        if 3 > len(player_name) or len(player_name) > 16:
+            print("Name needs to be between 3 and 16 characters")
             continue
         elif not player_name.isalpha():
             print("Name needs to have alphabetic letters only")
@@ -56,11 +70,33 @@ def show_help():
     "C. stats | H. help | M. show map | QUIT to quit")
 
 def goodbye(char):
-    print(f"Good bye {char.name}")
+    print(f"Good bye {char.name}.")
+
+def death(char):
+    print(f"Rest {char.name}, few more tutorial and You can do it!")
 
 def show_map(current_map):
     print(current_map.display_map(), end="")
 
+# roll for random monster encounter
+def random_encounter(char):
+    encounter_chance = 20
+    chance_roll = random.randint(1, 100)
+    if chance_roll <= encounter_chance:
+        regular_monsters = ["SyntaxError", "TypeError", "ZeroDivisionError"]
+        weights = [6, 3, 1]
+        random_monster = random.choices(regular_monsters, weights)[0]
+        new_monster = monster.generate_monster(random_monster)
+        combat_status = combat.start_combat(char, new_monster)
+        return combat_status
+    else:
+        return
+
 
 if __name__ == "__main__":
     main()
+    # regular_monsters = ["SyntaxError", "TypeError", "ZeroDivisionError"]
+    # weights = [4, 3, 1]
+    # random_monster = random.choices(regular_monsters, weights)
+    # print(random_monster)
+    # print(random_monster[0])
