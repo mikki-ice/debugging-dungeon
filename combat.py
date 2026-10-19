@@ -38,6 +38,7 @@ def attack(attacker, defender):
 def combat_round(character, enemy, action):
     events = []
     status = "" # continue, victory, defeated, run, invalid,  
+
     # player attacks
     if action == "A":
         dmg, dodge, crit = attack(character, enemy)
@@ -58,8 +59,14 @@ def combat_round(character, enemy, action):
     
     # heal
     elif action == "H":
-        status = "continue"
-        events.append("Coffee healed your sanity!")
+        if character.hp_potions == 0:
+            events.append("No coffee available")
+            status = "invalid"
+            return status, events
+        else:
+            healed = character.use_hp_potion()
+            events.append(f"Coffee restored {healed} sanity!")
+            status = "continue"
     
     # run away
     elif action == "R":
