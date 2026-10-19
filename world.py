@@ -2,7 +2,7 @@
 DUNGEON = [
     "###########",
     "#...#.....#", 
-    "###.#.###.#", # to find 4th field here, first we have to choose 3rd row and than 4th character in list. so Y3, X4 (minus one because zero indexed)
+    "###.B.###.#", # to find 4th field here, first we have to choose 3rd row and than 4th character in list. so Y2, X4 (minus one because zero indexed)
     "#...#...#.#",  
     "#.#####.#.#",
     "#.......#.#", 
@@ -37,7 +37,14 @@ class Map:
         if not 0 <= x <= max_x:
             return False
         # check if its a path
-        if self._map[y][x] == ".":
+        if self._map[y][x] == "." or self._map[y][x] == "B":
+            return True
+        return False
+
+    def is_boss_tile(self):
+        x = self._player_pos_x
+        y = self._player_pos_y
+        if self._map[y][x] == "B":
             return True
         return False
 
@@ -73,6 +80,7 @@ class Map:
         turning = (facing_now - 1) % 4
         self._direction = self.DIRECTIONS[turning]
 
+    # checks tile in front of player, if not a wall, move
     def move_forward(self):
         front_x = self._player_pos_x
         front_y = self._player_pos_y
@@ -104,3 +112,4 @@ if __name__ == "__main__":
     print(map1.display_map())
     print(map1.move_forward())
     print(map1._direction)
+    print(DUNGEON[2][4])

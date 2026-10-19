@@ -29,12 +29,17 @@ def main():
             if current_map.move_forward():
                 print("You move forward")
                 character.potion_regen()
-                status = random_encounter(character)
+                # checks if its time for boss fight
+                if current_map.is_boss_tile():
+                    status = boss_fight(character)
+                # if not boss, roll for random encounter
+                else:
+                    status = random_encounter(character)
                 if status == "defeated":
                     death(character)
                     break
-                else:
-                    continue
+                elif status == "game won":
+                    break
             else:
                 print("You hit the wall!")
         elif key == "D":
@@ -91,6 +96,11 @@ def random_encounter(char):
         return combat_status
     else:
         return
+
+def boss_fight(char):
+    boss = monster.generate_monster("Infinite Loop")
+    final_status = combat.start_combat(char, boss, is_boss=True)
+    return final_status
 
 
 if __name__ == "__main__":

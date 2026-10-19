@@ -37,9 +37,9 @@ def attack(attacker, defender):
     # return int, bool, bool
     return final_damage, dodge, critical
 
-def combat_round(character, enemy, action):
+def combat_round(character, enemy, action, is_boss = False):
     events = []
-    status = "" # continue, victory, defeated, run, invalid, no potions 
+    status = "" # continue, victory, defeated, run, invalid, no potions, game_won
 
     # player attacks
     # adds first position to events list
@@ -55,8 +55,16 @@ def combat_round(character, enemy, action):
             events.append(f"You dealt {dmg} damage!")
         # check if enemy alive
         if not enemy.is_alive:
-            status = "victory"
-            events.append(f"{enemy.name} solved!")
+            # if boss killed, game won
+            if is_boss == True:
+                status = "game won"
+                events.append(f"{enemy.name} TERMINATED!")
+                events.append(f"Congratulations {character.name}!")
+                events.append("Your Final Project is completed.")
+            # regular enemy killed, continue on map
+            else:
+                status = "victory"
+                events.append(f"{enemy.name} solved!")
             return status, events
         status = "continue"
     
@@ -73,15 +81,20 @@ def combat_round(character, enemy, action):
     
     # run away
     elif action == "R":
-        quit_roll = random.randint(1, 100)
-        # higher than 50% chance to run away from combat
-        if quit_roll > 40:
-            status = "run"
-            events.append("You successfully postponed all issues!")
-            return status, events
-        else:
-            events.append("EscapeError: Could not escape!")
+        # checks if boss. cant run from boss
+        if is_boss == True:
+            events.append("EscapeError: You are stuck in an Infinite Loop!")
             status = "continue"
+        else:
+            quit_roll = random.randint(1, 100)
+            # higher than 50% chance to run away from combat
+            if quit_roll > 40:
+                status = "run"
+                events.append("You successfully postponed all issues!")
+                return status, events
+            else:
+                events.append("EscapeError: Could not escape!")
+                status = "continue"
     else:
         events.append("Wrong key")
         status = "invalid"
@@ -102,14 +115,27 @@ def combat_round(character, enemy, action):
     # check if player alive
     if not character.is_alive:
         status = "defeated"
-        events.append("You have been defeated!")
+        # if killed by boss, special game over 
+        if is_boss == True:
+            events.append("RecursionError: Maximum frustration level exceeded!")
+            events.append("STACK OVERFLOW")
+            events.append("GAME OVER")
+        # if killed by regular mob
+        else:
+            events.append("You have been defeated!")
+
     return status, events
 
 
-def start_combat(character, enemy):
+def start_combat(character, enemy, is_boss=False):
     round_number = 1
+    # checks if boss fight
+    if is_boss == True:
+        print("You enter the final part of Your code...")
+        print(f"WARNING: {enemy.name} detected!")
+    else:
     # start of combat, random encounter
-    print(f"An unexpected {enemy.name} appears!")
+        print(f"An unexpected {enemy.name} appears!")
     while True:
         # prints basic stats
         print("=====================================================")
@@ -124,14 +150,14 @@ def start_combat(character, enemy):
             key_pressed = input("> ").strip().upper()
 
             # start combat round
-            status, events = combat_round(character, enemy, key_pressed)
+            status, events = combat_round(character, enemy, key_pressed, is_boss)
 
             if status not in ("invalid", "no potions", "run"):
                 print(f"ROUND {round_number}")
 
             for position in events:
                 print(position)
-            # coward
+            # no potions
             if status == "no potions":
                 continue
             # invalid key
@@ -144,7 +170,7 @@ def start_combat(character, enemy):
             round_number += 1
             continue
         # combat finished
-        elif status in ("victory", "defeated", "run"):
+        elif status in ("victory", "defeated", "run", "game won"):
             break
     # gain xp and level if victory
     if status == "victory":
