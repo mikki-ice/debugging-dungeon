@@ -35,25 +35,47 @@ def attack(attacker, defender):
     # return int, bool, bool
     return final_damage, dodge, critical
 
-def combat_round(character, enemy):
+def combat_round(character, enemy, action):
     events = []
-    # player starts attack
-    dmg, dodge, crit = attack(character, enemy)
-    if dodge:
-        events.append(f"{enemy.name} dodged!")
-    elif dmg == 0:
-        events.append("You missed!")
-    elif crit:
-        events.append(f"CRITICAL HIT! You dealt {dmg} damage!")
+    status = "" # continue, victory, defeated, run, invalid,  
+    # player attacks
+    if action == "A":
+        dmg, dodge, crit = attack(character, enemy)
+        if dodge:
+            events.append(f"{enemy.name} dodged!")
+        elif dmg == 0:
+            events.append("You missed!")
+        elif crit:
+            events.append(f"CRITICAL HIT! You dealt {dmg} damage!")
+        else:
+            events.append(f"You dealt {dmg} damage!")
+        # check if enemy alive
+        if not enemy.is_alive:
+            status = "victory"
+            events.append(f"{enemy.name} defeated!")
+            return status, events
+        status = "continue"
+    
+    # heal
+    elif action == "H":
+        status = "continue"
+        events.append("Coffee healed your sanity!")
+    
+    # run away
+    elif action == "R":
+        quit_roll = random.randint(1, 100)
+        # higher than 50% chance to run away from combat
+        if quit_roll > 40:
+            status = "run"
+            events.append("You successfully posponed all issues")
+            return status, events
+        else:
+            status = "continue"
     else:
-        events.append(f"You dealt {dmg} damage!")
-    # check if enemy alive
-    if not enemy.is_alive:
-        status = "victory"
-        events.append(f"{enemy.name} defeated!")
+        status = "invalid"
         return status, events
-    status = "continue"
-    # enemy attacks
+    
+    # enemy attacks (after player attack/heal/unsuccessfull run)
     dmg, dodge, crit = attack(enemy, character)
     if dodge:
         events.append("You dodged!")
@@ -63,14 +85,12 @@ def combat_round(character, enemy):
         events.append(f"CRITICAL HIT! Enemy hits for {dmg} damage!")
     else:
         events.append(f"Enemy hits for {dmg} damage!")
+
     # check if player alive
     if not character.is_alive:
         status = "defeated"
-        events.append(f"You have been defeated!")
-        return status, events
+        events.append("You have been defeated!")
     return status, events
-
-
 
 
     # player_dead = False
@@ -86,11 +106,11 @@ def combat_round(character, enemy):
 
 if __name__ == "__main__":     
     plr = player.Player("Jelad")
-    rat = monster.generate_monster("Rat")
+    syntax_error1 = monster.generate_monster("SyntaxError")
 
     print(plr.is_alive)
-    print(rat.is_alive)
-    print(combat_round(plr, rat))
-    print(plr.is_alive)
-    print(rat.is_alive)
+    print(syntax_error1.is_alive)
+    print(combat_round(plr, syntax_error1, "A"))
+    print(plr)
+    print(syntax_error1)
 

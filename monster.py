@@ -2,21 +2,32 @@ import random
 
 # monster typ templates
 MONSTERS = {
-    "Rat": {
+    # lvl 1
+    "SyntaxError": {
         "max_hp": (20, 30),
         "attack": (10, 12),
         "defense": (5, 9),
         "dexterity": (0, 1),
         "xp_reward": (8, 12),
     },
-    "Wild Boar": {
+    # lvl 1-2
+    "TypeError": {
         "max_hp": (10, 19),
         "attack": (5, 9),
         "defense": (5, 6),
         "dexterity": (2, 4),
         "xp_reward": (10, 20),
     },
-    "Goblin": {
+    # lvl 2
+    "ZeroDivisionError": {
+        "max_hp": (10, 19),
+        "attack": (5, 9),
+        "defense": (5, 6),
+        "dexterity": (2, 4),
+        "xp_reward": (10, 20),
+    },
+    # Final Boss
+    "Infinite Loop": {
         "max_hp": (16, 25),
         "attack": (8, 13),
         "defense": (4, 9),
@@ -108,16 +119,13 @@ def generate_monster(monster_type):
 
 if __name__ == "__main__":
 
-    template = MONSTERS["Rat"]
+    template = MONSTERS["SyntaxError"]
     hp_range = template["max_hp"]
     print(template)
     print(hp_range)
     print(hp_range[0], "|||", hp_range[1])
 
-    rat1 = generate_monster("Rat")
-    rat2 = generate_monster("Rat")
-    rat3 = generate_monster("Rat")
+    syntax_error1 = generate_monster("SyntaxError")
 
-    print(rat1)
-    print(rat2)
-    print(rat3)
+
+    print(syntax_error1)
