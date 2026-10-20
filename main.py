@@ -11,6 +11,7 @@ def main():
     name = welcome("Student name: ")
     character = player.Player(name)
     current_map = world.Map()
+    show_map(current_map)
     # commands loop
     while True:
         show_help()
@@ -71,7 +72,7 @@ def stats(char):
 
 def show_help():
     print("Available commands:\n"
-          "W A D to move\n"
+          "W to move forward, A and D to change direction\n"
     "C. stats | H. help | M. show map | QUIT to quit")
 
 def goodbye(char):

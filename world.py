@@ -1,25 +1,47 @@
-# premade map, list, each row is a string, each char is a column. top left is DUNGEON[0][0], bottom right DUNGEON[10][10], center DUNGEON[5][5]
+import ui
+# premade map, list, each row is a string, each char is a column. Y - string, X - char in string
 DUNGEON = [
-    "###########",
-    "#...#.....#", 
-    "###.B.###.#", # to find 4th field here, first we have to choose 3rd row and than 4th character in list. so Y2, X4 (minus one because zero indexed)
-    "#...#...#.#",  
-    "#.#####.#.#",
-    "#.......#.#", 
-    "#.#######.#",
-    "#.........#",
-    "#.#####.###",
-    "#.####..###", # second position here (dot) is Y[9] X[2]
-    "###########",
+    "          XXXXXXXXXXXXXXXX",
+    "          XXX...........XX",
+    "          XXXXXXXXXXXXX.XX",
+    "          XXXXXXXXXXXXX.XX",
+    "          XXXXXXXXXXXXX.XX",
+    "   XXXXXXXXXXXXX........XX",
+    "   XXX......XXXX.XXXXXXXXX",
+    "   XXX.XXXX.XXXX.XXYYYYYYYYYYYYYYY",
+    "   XXX............XYYYYYYYYYYYYYYY",
+    "   XXXXXXXXXXXXXX.XYYYYY......YYYY",
+    "   XXXXXXXXXYYYYY.YYYYYY.YYYY.YYYY",
+    "            YYYYY.............YYYY",
+    "            YYYYYYYYYYYY.YYYYYYYYY",
+    "            YYYYYYYYYYYY.YYY",
+    "            YYY..........YYY",
+    "            YYY.YYYYYYYYYYYY",
+    "            YYY..........BYY",
+    "            YYYYYYYYYYYYYYYY",
 ]
-# Y = line, whole string, map heigth 
+
+# makes new dungeon list where all string are same length
+fixed_dungeon = []
+width = 0
+# gets longest string
+for row in DUNGEON:
+    width = max(width, len(row))
+# align to left and pads right with spaces 
+for row in DUNGEON:
+    new_row = row.ljust(width)
+    fixed_dungeon.append(new_row)
+
+DUNGEON = fixed_dungeon
+
+# Y = line, whole string, map height
 # X = one char in line string, map width
 
 class Map:
     # list of facing directions
     DIRECTIONS = ("N", "E", "S", "W")
 
-    def __init__(self, start_pos_x=1, start_pos_y=1):
+    def __init__(self, start_pos_x=13, start_pos_y=1):
         self._map = DUNGEON
         self._start_pos_x = start_pos_x
         self._start_pos_y = start_pos_y
@@ -62,11 +84,25 @@ class Map:
                     if self._direction == "E":
                         face = ">"
                     if self._direction == "W":
-                        face = "<"        
-                    mini_map += face
+                        face = "<"
+                    # adding extra space so player is 2 chars wide.        
+                    mini_map += ui.GREEN + face + " " + ui.RESET
+                # all tiles are double so map looks square
                 else:
-                    mini_map += tile
+                    if tile == "X":
+                        mini_map += ui.BLUE + "██" + ui.RESET
+                    elif tile == "Y":
+                        mini_map += ui.YELLOW + "██" + ui.RESET
+                    elif tile == ".":
+                        mini_map += "· "
+                    elif tile == "B":
+                        mini_map += ui.RED + "██" + ui.RESET
+                    else:
+                        mini_map += "  "
             mini_map += "\n"
+        # map legend
+        mini_map += ui.GREEN + "> " + ui.RESET + " - Player\n"
+        mini_map += ui.RED + "██" + ui.RESET + " - Final Boss\n" 
         return mini_map
 
     # turning face
@@ -113,3 +149,6 @@ if __name__ == "__main__":
     print(map1.move_forward())
     print(map1._direction)
     print(DUNGEON[2][4])
+    print(len(DUNGEON))
+    for row in DUNGEON:
+        print(len(row))

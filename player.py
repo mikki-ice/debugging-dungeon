@@ -84,6 +84,7 @@ class Player:
                 f"Sanity: {self._hp}/{self._max_hp}\n"
                 f"Debug strength: {self._attack} | Defense: {self._defense} | Dexterity: {self._dexterity}\n"
                 f"Python Experience: {self._xp}/{self.xp_to_next}"
+                f"Coffee available: {self._hp_potions}"
         )
 
 
