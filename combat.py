@@ -129,22 +129,21 @@ def combat_round(character, enemy, action, is_boss = False):
 
 
 def start_combat(character, enemy, is_boss=False):
+    # adds all events to one list
+    combat_log = []
+    # counts rounds
     round_number = 1
+    # intro on top of combat screen
+    intro = ""
     # checks if boss fight
     if is_boss == True:
-        print("You enter the final part of Your code...")
-        print(f"WARNING: {enemy.name} detected!")
+        intro = f"You enter the final part of Your code...\nWARNING: {enemy.name} detected!"
     else:
     # start of combat, random encounter
-        print(f"An unexpected {enemy.name} appears!")
+        intro = f"An unexpected {enemy.name} appears!"
     while True:
-        # prints basic stats
-        print("=====================================================")
-        print(f"Student Sanity: {character.hp}/{character.max_hp}")
-        print(f"{enemy.name} HP: {enemy.hp}/{enemy.max_hp}")
-        print()
-        print(f"Coffee available: {character.hp_potions}")
-        print("=====================================================")
+        # prints whole combat screen
+        display_combat(character, enemy, intro, round_number, combat_log)
         # ask for input loop
         while True:
             print("[A] Debug | [H] Drink Coffee | [R] Run away from problems")
@@ -152,20 +151,24 @@ def start_combat(character, enemy, is_boss=False):
 
             # start combat round
             status, events = combat_round(character, enemy, key_pressed, is_boss)
+            if status not in ("invalid", "no potions"):
+                combat_log.append("---------------------------------")
+                combat_log.append(f"Round: {round_number}")
+                combat_log.extend(events)
 
-            if status not in ("invalid", "no potions", "run"):
-                print(f"ROUND {round_number}")
-
-            for position in events:
-                print(position)
             # no potions
             if status == "no potions":
+                display_combat(character, enemy, intro, round_number, combat_log)
+                print(events[0])
                 continue
             # invalid key
             if status == "invalid":
+                display_combat(character, enemy, intro, round_number, combat_log)
+                print(events[0])
                 continue
 
-            break
+            break   
+
         # continue combat
         if status == "continue":
             round_number += 1
@@ -177,11 +180,33 @@ def start_combat(character, enemy, is_boss=False):
     if status == "victory":
         xp_gained = enemy.xp_reward
         levels_amount = character.add_xp(xp_gained)
-        print(f"You gained {xp_gained} points of Python Experience!")
+        combat_log.append(f"You gained {xp_gained} points of Python Experience!")
         if levels_amount > 0:
-            print(f"You gained {levels_amount} {p.plural_noun('level', levels_amount)}!")
+            combat_log.append(f"You gained {levels_amount} {p.plural_noun('level', levels_amount)}!")
+
+    display_combat(character, enemy, intro, round_number, combat_log)
+    input("\nPress Enter to continue...")
     return status
-        
+
+
+# each round is completly new screen but looks like refresh. clear screen + new stats + longer combat log
+def display_combat(character, enemy, intro, round_number, combat_log):
+    ui.clear_screen()
+    print(intro)
+    # prints basic stats
+    print("=====================================================")
+    print(f"Student Sanity: {character.hp}/{character.max_hp}")
+    print(f"{enemy.name} HP: {enemy.hp}/{enemy.max_hp}")
+    print()
+    print(f"Coffee available: {character.hp_potions}")
+    print("=====================================================")
+
+    # prints full combat log, line by line
+    for log in combat_log:
+        print(log)
+
+
+
 
 
 # testing random things
@@ -195,5 +220,5 @@ if __name__ == "__main__":
     # print(plr)
     # print(syntax_error1)
 
-
-    print(start_combat(plr, syntax_error1))
+    start_combat(plr, syntax_error1)
+    print("XXX TEST DONE")

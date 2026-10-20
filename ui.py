@@ -15,4 +15,7 @@ RESET = "\033[0m"
 def clear_screen():
     print("\033[H\033[2J\033[3J", end="")
 
-clear_screen()
+# testing random things
+if __name__ == "__main__":    
+    clear_screen()
+    print("\033[38;2;255;212;59m yellow \033[0m reseted")

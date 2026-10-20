@@ -148,7 +148,7 @@ if __name__ == "__main__":
     print(map1.display_map())
     print(map1.move_forward())
     print(map1._direction)
-    print(DUNGEON[2][4])
-    print(len(DUNGEON))
-    for row in DUNGEON:
-        print(len(row))
+    # print(DUNGEON[2][4])
+    # print(len(DUNGEON))
+    # for row in DUNGEON:
+    #     print(len(row))

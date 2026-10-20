@@ -8,7 +8,7 @@ MONSTERS = {
         "attack": (10, 12),
         "defense": (2, 4),
         "dexterity": (0, 1),
-        "xp_reward": (15, 20),
+        "xp_reward": (150, 2000),
     },
     # lvl 1-2
     "TypeError": {
@@ -16,7 +16,7 @@ MONSTERS = {
         "attack": (5, 9),
         "defense": (5, 6),
         "dexterity": (2, 4),
-        "xp_reward": (10, 20),
+        "xp_reward": (10, 2000),
     },
     # lvl 2
     "ZeroDivisionError": {
