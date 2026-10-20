@@ -83,7 +83,7 @@ def show_map(current_map):
 
 # roll for random monster encounter
 def random_encounter(char):
-    encounter_chance = 20
+    encounter_chance = 10
     chance_roll = random.randint(1, 100)
     if chance_roll <= encounter_chance:
         regular_monsters = ["SyntaxError", "TypeError", "ZeroDivisionError"]

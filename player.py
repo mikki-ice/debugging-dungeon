@@ -5,13 +5,13 @@ class Player:
         self._hp = self._max_hp
         self._level = 1
         self._xp = 0
-        # self._xp_to_next = self.xp_to_next
         self._attack = 10
         self._defense = 5
         self._dexterity = 2
         self._hp_potions = 2
         self._hp_potions_max = 2
         self._hp_potion_regen = 0
+        # self._xp_to_next = self.xp_to_next
 
     # take damage equal or less than current hp
     def take_damage(self, amount):

@@ -6,6 +6,12 @@ YELLOW = "\033[38;2;255;212;59m"
 GREEN = "\033[92m"
 RED = "\033[91m"
 
+# player arrow colors = font_color;background_color
+PLAYER = "\033[1;92;47m"
+
+# background
+WHITE = "\033[47m"
+
 # reset to default terminal settings
 RESET = "\033[0m"
 

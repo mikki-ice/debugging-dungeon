@@ -8,7 +8,7 @@ MONSTERS = {
         "attack": (10, 12),
         "defense": (2, 4),
         "dexterity": (0, 1),
-        "xp_reward": (150, 2000),
+        "xp_reward": (15, 30),
     },
     # lvl 1-2
     "TypeError": {
@@ -16,7 +16,7 @@ MONSTERS = {
         "attack": (5, 9),
         "defense": (5, 6),
         "dexterity": (2, 4),
-        "xp_reward": (10, 2000),
+        "xp_reward": (20, 40),
     },
     # lvl 2
     "ZeroDivisionError": {
@@ -28,9 +28,9 @@ MONSTERS = {
     },
     # Final Boss
     "Infinite Loop": {
-        "max_hp": (16, 25),
-        "attack": (8, 13),
-        "defense": (4, 9),
+        "max_hp": (550, 650),
+        "attack": (45, 50),
+        "defense": (15, 18),
         "dexterity": (4, 6),
         "xp_reward": (20, 35),
     },

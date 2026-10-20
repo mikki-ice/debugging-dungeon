@@ -1,24 +1,49 @@
 import ui
 # premade map, list, each row is a string, each char is a column. Y - string, X - char in string
+# v1.0 python dung
+# DUNGEON = [
+#     "           XXXXXXXXXXXXXXX",
+#     "           XX...........XX",
+#     "           XXXXXXXXXXXX.XX",
+#     "           XXXXXXXXXXXX.XX",
+#     "           XXXXXXXXXXXX.XX",
+#     "   XXXXXXXXXXXXX........XX",
+#     "   XXX......XXXX.XXXXXXXXX",
+#     "   XXX.XXXX.XXXX.XXYYYYYYYYYYYYYYY",
+#     "   XXX............XYYYYYYYYYYYYYYY",
+#     "   XXXXXXXXXXXXXX.XYYYYY......YYYY",
+#     "   XXXXXXXXXYYYYY.YYYYYY.YYYY.YYYY",
+#     "            YYYYY.............YYYY",
+#     "            YYYYYYYYYYYY.YYYYYYYYY",
+#     "            YYYYYYYYYYYY.YY",
+#     "            YY...........YY",
+#     "            YY.YYYYYYYYYYYY",
+#     "            YY...........BY",
+#     "            YYYYYYYYYYYYYYY",
+# ]
+
 DUNGEON = [
-    "          XXXXXXXXXXXXXXXX",
-    "          XXX...........XX",
-    "          XXXXXXXXXXXXX.XX",
-    "          XXXXXXXXXXXXX.XX",
-    "          XXXXXXXXXXXXX.XX",
-    "   XXXXXXXXXXXXX........XX",
-    "   XXX......XXXX.XXXXXXXXX",
-    "   XXX.XXXX.XXXX.XXYYYYYYYYYYYYYYY",
-    "   XXX............XYYYYYYYYYYYYYYY",
-    "   XXXXXXXXXXXXXX.XYYYYY......YYYY",
-    "   XXXXXXXXXYYYYY.YYYYYY.YYYY.YYYY",
-    "            YYYYY.............YYYY",
-    "            YYYYYYYYYYYY.YYYYYYYYY",
-    "            YYYYYYYYYYYY.YYY",
-    "            YYY..........YYY",
-    "            YYY.YYYYYYYYYYYY",
-    "            YYY..........BYY",
-    "            YYYYYYYYYYYYYYYY",
+    "           .................",
+    "           .XXXXXXXXXXXXXXX.",
+    "           .XXXXXXXXXXXXXXX.",
+    "           .....SXXXXXXXXXX.",
+    "           WXXXXXXXXXXXXXXX.",
+    "   WWWWWWWWWXXXXXXXXXXXXXXX.",
+    "   WXXXXXXXXXXXXXXXXXXXXXXX.",
+    "   WXXXXXXXXXXXXXXXXXXXXXXX.WWWWWWW",
+    "   WXXXXXXXXXXXXXXXXXXXXXXX.YYYYYYW",
+    "   WXXXXXXXXXXXXXXXXXXXXXXX.YYYYYYW",
+    "   WXXXXXXX.................YYYYYYW",
+    "   WXXXXXXX.YYYYYYYYYYYYYYYYYYYYYYW",
+    "   WXXXXXXX.YYYYYYYYYYYYYYYYYYYYYYW",
+    "   WWWWWWWW.YYYYYYYYYYYYYYYYYYYYYYW",
+    "           .YYYYYYYYYYYYYYYYYYYYYYW",
+    "           .YYYYYYYYYYYYYYYWWWWWWWW",
+    "           .YYYYYYYYYYYYYYYW",
+    "           .YYYYYYYYYYB.....",
+    "           .YYYYYYYYYYYYYYY.",
+    "           .YYYYYYYYYYYYYYY.",
+    "           .................",
 ]
 
 # makes new dungeon list where all string are same length
@@ -41,13 +66,13 @@ class Map:
     # list of facing directions
     DIRECTIONS = ("N", "E", "S", "W")
 
-    def __init__(self, start_pos_x=13, start_pos_y=1):
+    def __init__(self, start_pos_x=16, start_pos_y=3):
         self._map = DUNGEON
         self._start_pos_x = start_pos_x
         self._start_pos_y = start_pos_y
         self._player_pos_x = start_pos_x
         self._player_pos_y = start_pos_y
-        self._direction = self.DIRECTIONS[1]
+        self._direction = self.DIRECTIONS[3]
 
     def is_walkable(self, x, y):
         max_y = len(self._map) - 1
@@ -86,7 +111,7 @@ class Map:
                     if self._direction == "W":
                         face = "<"
                     # adding extra space so player is 2 chars wide.        
-                    mini_map += ui.GREEN + face + " " + ui.RESET
+                    mini_map += ui.PLAYER + face + " " + ui.RESET
                 # all tiles are double so map looks square
                 else:
                     if tile == "X":
@@ -94,9 +119,13 @@ class Map:
                     elif tile == "Y":
                         mini_map += ui.YELLOW + "██" + ui.RESET
                     elif tile == ".":
-                        mini_map += "· "
+                        mini_map += ui.WHITE + "· " + ui.RESET
                     elif tile == "B":
                         mini_map += ui.RED + "██" + ui.RESET
+                    elif tile == "W":
+                        mini_map += ui.WHITE + "  " + ui.RESET
+                    elif tile == "S":
+                        mini_map += ui.GREEN + "██" + ui.RESET
                     else:
                         mini_map += "  "
             mini_map += "\n"
