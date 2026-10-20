@@ -1,6 +1,7 @@
 import monster
 import player
 import random
+import ui
 import world
 import inflect
 p = inflect.engine()
@@ -55,7 +56,7 @@ def combat_round(character, enemy, action, is_boss = False):
             events.append(f"You dealt {dmg} damage!")
         # check if enemy alive
         if not enemy.is_alive:
-            # if boss killed, game won
+            # if boss killed, GAME WON
             if is_boss == True:
                 status = "game won"
                 events.append(f"{enemy.name} TERMINATED!")

@@ -1,7 +1,8 @@
 import combat
 import monster
-import random
 import player
+import random
+import ui
 import world
 
 
@@ -11,24 +12,23 @@ def main():
     name = welcome("Student name: ")
     character = player.Player(name)
     current_map = world.Map()
-    show_map(current_map)
+    log = ""
     # commands loop
     while True:
+        ui.clear_screen()
+        show_map(current_map)
         show_help()
+        print(log)
         key = input("> ").strip().upper()
         if key == "C":
-            stats(character)
-        elif key == "H":
-            show_help()
-        elif key == "M":
-            show_map(current_map)
+            log = (character)
         elif key == "QUIT":
-            goodbye(character)
+            print(goodbye(character))
             break
         elif key == "W":
             # if move forward is possible, move and roll for random encounter
             if current_map.move_forward():
-                print("You move forward")
+                log = "You move forward"
                 character.potion_regen()
                 # checks if its time for boss fight
                 if current_map.is_boss_tile():
@@ -37,20 +37,20 @@ def main():
                 else:
                     status = random_encounter(character)
                 if status == "defeated":
-                    death(character)
+                    print(death(character))
                     break
                 elif status == "game won":
                     break
             else:
-                print("You hit the wall!")
+                log = "You hit the wall!"
         elif key == "D":
             current_map.turn_right()
-            print("You turned right")
+            log = "You turned right"
         elif key == "A":
             current_map.turn_left()
-            print("You turned left")
+            log = "You turned left"
         else:
-            show_help()
+            log =  "Incorrect key"
 
 
 # welcome message and get character name
@@ -66,20 +66,17 @@ def welcome(n):
             continue
         return player_name
 
-# character stats
-def stats(char):
-    print(char)
 
 def show_help():
     print("Available commands:\n"
-          "W to move forward, A and D to change direction\n"
-    "C. stats | H. help | M. show map | QUIT to quit")
+          "W. to move forward, A. and D. to change direction\n"
+    "C. stats | QUIT to quit")
 
 def goodbye(char):
-    print(f"Good bye {char.name}.")
+    return f"Good bye {char.name}."
 
 def death(char):
-    print(f"Rest {char.name}, few more tutorial and You can do it!")
+    return f"Rest {char.name}, few more tutorial and You can do it!"
 
 def show_map(current_map):
     print(current_map.display_map(), end="")
