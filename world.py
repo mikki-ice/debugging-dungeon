@@ -75,6 +75,7 @@ class Map:
         self._direction = self.DIRECTIONS[3]
 
     def is_walkable(self, x, y):
+        # len() starts to count at 1, not 0. so -1 to get real position 
         max_y = len(self._map) - 1
         max_x = len(self._map[0]) - 1
 
@@ -168,12 +169,13 @@ class Map:
 # testing random things
 if __name__ == "__main__":         
 
-    print(DUNGEON[10][10])
+    print(DUNGEON[0][15])
     lengthY = len(DUNGEON) - 1
     print("lenY: ", lengthY)
     lengthX = len(DUNGEON[0]) - 1
     print("lenZ: ", lengthX)
     map1 = Map()
+    print(map1.is_walkable(15, 0))
     print(map1.display_map())
     print(map1.move_forward())
     print(map1._direction)

@@ -4,35 +4,35 @@ import random
 MONSTERS = {
     # lvl 1
     "SyntaxError": {
-        "max_hp": (15, 22),
-        "attack": (10, 12),
-        "defense": (2, 4),
-        "dexterity": (0, 1),
-        "xp_reward": (15, 30),
+        "max_hp": (12, 18),
+        "attack": (6, 9),
+        "defense": (1, 3),
+        "dexterity": (1, 3),
+        "xp_reward": (45, 55),
     },
     # lvl 1-2
     "TypeError": {
-        "max_hp": (10, 19),
-        "attack": (5, 9),
-        "defense": (5, 6),
+        "max_hp": (22, 30),
+        "attack": (10, 14),
+        "defense": (2, 4),
         "dexterity": (2, 4),
-        "xp_reward": (20, 40),
+        "xp_reward": (70, 80),
     },
     # lvl 2
     "ZeroDivisionError": {
-        "max_hp": (10, 19),
-        "attack": (5, 9),
-        "defense": (5, 6),
-        "dexterity": (2, 4),
-        "xp_reward": (10, 20),
+        "max_hp": (28, 35),
+        "attack": (11, 15),
+        "defense": (4, 6),
+        "dexterity": (5, 7),
+        "xp_reward": (100, 120),
     },
     # Final Boss
     "Infinite Loop": {
-        "max_hp": (550, 650),
-        "attack": (45, 50),
-        "defense": (15, 18),
-        "dexterity": (4, 6),
-        "xp_reward": (20, 35),
+        "max_hp": (95, 110),
+        "attack": (21, 25),
+        "defense": (7, 9),
+        "dexterity": (5, 7),
+        "xp_reward": (200, 250),
     },
 }
 
