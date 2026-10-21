@@ -9,7 +9,7 @@ import world
 
 
 def main():
-    name = welcome("Student name: ")
+    name = get_name("Student name: ")
     character = player.Player(name)
     current_map = world.Map()
     log = ""
@@ -53,9 +53,8 @@ def main():
             log =  "Incorrect key"
 
 
-# welcome message and get character name
-def welcome(n):
-    print("Welcome to my first text based RPG, have fun and please be gentle.")
+# get character name
+def get_name(n):
     while True:
         player_name = input(n).strip().title()
         if 3 > len(player_name) or len(player_name) > 16:
