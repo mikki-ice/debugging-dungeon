@@ -180,3 +180,4 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 simulation.py
+*.7z
