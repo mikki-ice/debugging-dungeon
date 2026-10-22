@@ -2,7 +2,6 @@ import monster
 import player
 import random
 import ui
-import world
 import inflect
 p = inflect.engine()
 
@@ -47,54 +46,54 @@ def combat_round(character, enemy, action, is_boss = False):
     if action == "A":
         dmg, dodge, crit = attack(character, enemy)
         if dodge:
-            events.append(f"{enemy.name} dodged!")
+            events.append(f"{ui.RED}{enemy.name}{ui.RESET} avoided your patch!")
         elif dmg == 0:
-            events.append("You missed!")
+            events.append("Patch failed! No damage dealt.")
         elif crit:
-            events.append(f"CRITICAL HIT! You dealt {dmg} damage!")
+            events.append(f"{ui.ORANGE}CRITICAL PATCH!{ui.RESET} {ui.GREEN}{dmg}{ui.RESET} damage dealt!")
         else:
-            events.append(f"You dealt {dmg} damage!")
+            events.append(f"{ui.GREEN}{dmg}{ui.RESET} damage dealt!")
         # check if enemy alive
         if not enemy.is_alive:
             # if boss killed, GAME WON
             if is_boss == True:
                 status = "game won"
-                events.append(f"{enemy.name} TERMINATED!")
-                events.append(f"Congratulations {character.name}!")
-                events.append("Your Final Project is completed.")
+                events.append(f"{ui.RED}{enemy.name}{ui.RESET} TERMINATED!")
+                events.append(f"{ui.GREEN}Congratulations {character.name}!{ui.RESET}")
+                events.append(f"{ui.GREEN}Your Final Project is succesfuly debugged and submited.{ui.RESET}")
             # regular enemy killed, continue on map
             else:
                 status = "victory"
-                events.append(f"{enemy.name} solved!")
+                events.append(f"{ui.GREEN}{enemy.name} status: RESOLVED!{ui.RESET}")
             return status, events
         status = "continue"
     
     # heal
     elif action == "H":
         if character.hp_potions == 0:
-            events.append("No coffee available")
+            events.append(f"No coffee available.")
             status = "no potions"
             return status, events
         else:
             healed = character.use_hp_potion()
-            events.append(f"Coffee restored {healed} sanity!")
+            events.append(f"{ui.GREEN}Coffee restored {healed} sanity!{ui.RESET}")
             status = "continue"
     
     # run away
     elif action == "R":
         # checks if boss. cant run from boss
         if is_boss == True:
-            events.append("EscapeError: You are stuck in an Infinite Loop!")
+            events.append(f"{ui.RED}EscapeError: You are stuck in an Infinite Loop!{ui.RESET}")
             status = "continue"
         else:
             quit_roll = random.randint(1, 100)
             # higher than 50% chance to run away from combat
             if quit_roll > 40:
                 status = "run"
-                events.append("You successfully postponed all issues!")
+                events.append("TODO: Fix this later. Escape successfull!")
                 return status, events
             else:
-                events.append("EscapeError: Could not escape!")
+                events.append(f"{ui.RED}EscapeError: Could not escape!{ui.RESET}")
                 status = "continue"
     else:
         events.append("Wrong key")
@@ -105,25 +104,25 @@ def combat_round(character, enemy, action, is_boss = False):
     # adds second position to events list
     dmg, dodge, crit = attack(enemy, character)
     if dodge:
-        events.append("You dodged!")
+        events.append("Exception handled, You dodged!")
     elif dmg == 0:
-        events.append("Enemy missed!")
+        events.append("Exception failed to execute, no sanity lost!")
     elif crit:
-        events.append(f"CRITICAL ERROR! {enemy.name} reduced Your sanity by {dmg}!")
+        events.append(f"{ui.ORANGE}CRITICAL EXCEPTION!{ui.RESET} {ui.RED}{enemy.name}{ui.RESET} reduced Your sanity by {ui.RED}{dmg}!{ui.RESET}")
     else:
-        events.append(f"{enemy.name} reduced Your sanity by {dmg}!")
+        events.append(f"{ui.RED}{enemy.name}{ui.RESET} reduced Your sanity by {ui.RED}{dmg}{ui.RESET}!")
 
     # check if player alive
     if not character.is_alive:
         status = "defeated"
         # if killed by boss, special game over 
         if is_boss == True:
-            events.append("RecursionError: Maximum frustration level exceeded!")
-            events.append("STACK OVERFLOW")
-            events.append("GAME OVER")
+            events.append(f"{ui.RED}RecursionError: Maximum frustration level exceeded!{ui.RESET}")
+            events.append(f"{ui.RED}STACK OVERFLOW{ui.RESET}")
+            events.append(f"{ui.RED}GAME OVER{ui.RESET}")
         # if killed by regular mob
         else:
-            events.append("You have been defeated!")
+            events.append(f"{ui.RED}You have been defeated!{ui.RESET}")
 
     return status, events
 
@@ -137,23 +136,23 @@ def start_combat(character, enemy, is_boss=False):
     intro = ""
     # checks if boss fight
     if is_boss == True:
-        intro = f"You enter the final part of Your code...\nWARNING: {enemy.name} detected!"
+        intro = f"You enter the final part of Your code...\n{ui.RED}CRITICAL WARNING: {enemy.name} detected!{ui.RESET}"
     else:
     # start of combat, random encounter
-        intro = f"An unexpected {enemy.name} appears!"
+        intro = f"WARNING: Unhandled {ui.RED}{enemy.name}{ui.RESET} encountered!"
     while True:
         # prints whole combat screen
         display_combat(character, enemy, intro, round_number, combat_log)
         # ask for input loop
         while True:
-            print("[A] Debug | [H] Drink Coffee | [R] Run away from problems")
+            print(f"{ui.RED}[A]{ui.RESET} Apply Patch | {ui.GREEN}[H]{ui.RESET} Drink Coffee | {ui.ORANGE}[R]{ui.RESET} Add to TODO (Run)")
             key_pressed = input("> ").strip().upper()
 
             # start combat round
             status, events = combat_round(character, enemy, key_pressed, is_boss)
             if status not in ("invalid", "no potions"):
                 combat_log.append("---------------------------------")
-                combat_log.append(f"Round: {round_number}")
+                combat_log.append(f"Debugging Attempt #{round_number}")
                 combat_log.extend(events)
 
             # no potions
@@ -180,9 +179,9 @@ def start_combat(character, enemy, is_boss=False):
     if status == "victory":
         xp_gained = enemy.xp_reward
         levels_amount = character.add_xp(xp_gained)
-        combat_log.append(f"You gained {xp_gained} points of Python Experience!")
+        combat_log.append(f"{ui.GREEN}+{xp_gained} Python Experience(XP) earned!{ui.RESET}")
         if levels_amount > 0:
-            combat_log.append(f"You gained {levels_amount} {p.plural_noun('level', levels_amount)}!")
+            combat_log.append(f"{ui.GREEN}LEVEL UP! Your python skills have improved by {levels_amount} {p.plural_noun('level', levels_amount)}!{ui.RESET}")
 
     display_combat(character, enemy, intro, round_number, combat_log)
     input("\nPress Enter to continue...")
@@ -195,10 +194,10 @@ def display_combat(character, enemy, intro, round_number, combat_log):
     print(intro)
     # prints basic stats
     print("=====================================================")
-    print(f"Student Sanity: {character.hp}/{character.max_hp}")
-    print(f"{enemy.name} HP: {enemy.hp}/{enemy.max_hp}")
+    print(f"{ui.GREEN}Developer{ui.RESET} Sanity: {character.hp}/{character.max_hp}")
+    print(f"{ui.RED}{enemy.name}{ui.RESET} Integrity: {enemy.hp}/{enemy.max_hp}")
     print()
-    print(f"Coffee available: {character.hp_potions}")
+    print(f"Coffee remaining: {character.hp_potions}")
     print("=====================================================")
 
     # prints full combat log, line by line

@@ -9,7 +9,9 @@ import world
 
 
 def main():
-    name = get_name("Student name: ")
+    ui.clear_screen()
+    welcome()
+    name = get_name("Initialize character. Enter your name: ")
     character = player.Player(name)
     current_map = world.Map()
     log = ""
@@ -53,6 +55,23 @@ def main():
             log =  "Incorrect key"
 
 
+def welcome():
+    print("==================================================")
+    print(f"          {ui.BLUE}CS50P: DEBUGGING DUNGEON{ui.RESET}")
+    print("==================================================")
+    print("Your final project is almost complete.\n"
+          "Just one final test...\n"
+          "pytest project.py\n"
+          f"{ui.RED}ERROR!!! Your code has become self-aware!{ui.RESET}\n\n"
+          "Something went terribly wrong.\n"
+          "Somehow you ended up inside your own code!\n"
+          "Find your way through the dungeon.\n"
+          "Debug the errors\n"
+          f"Escape the {ui.RED}Infinite Loop{ui.RESET}\n"
+          f"{ui.GREEN}Good luck, Student\n{ui.RESET}"
+          "==================================================\n")
+
+
 # get character name
 def get_name(n):
     while True:
@@ -67,15 +86,15 @@ def get_name(n):
 
 
 def show_help():
-    print("Available commands:\n"
-          "W. to move forward, A. and D. to change direction\n"
-    "C. stats | QUIT to quit")
+    print(f"AVAILABLE COMMANDS\n"
+          f"{ui.GREEN}[W]{ui.RESET} move forward | {ui.GREEN}[A/D]{ui.RESET} rotate left/right\n"
+          f"{ui.GREEN}[C]{ui.RESET} inspect variables (stats) | {ui.RED}[QUIT]{ui.RESET} terminate program (and yourself in it)")
 
 def goodbye(char):
-    return f"Good bye {char.name}."
+    return f"{ui.RED}Process terminated. Your bugs are still there, {char.name}.{ui.RESET}"
 
 def death(char):
-    return f"Rest {char.name}, few more tutorial and You can do it!"
+    return f"{ui.RED}GAME OVER:{ui.RESET} {char.name} has been defeated by their own code. Time to watch that lecture again!"
 
 def show_map(current_map):
     print(current_map.display_map(), end="")

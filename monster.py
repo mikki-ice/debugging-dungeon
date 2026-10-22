@@ -1,4 +1,5 @@
 import random
+import ui
 
 # monster typ templates (nested dictionary) MONSTERS[name][atribute] to get names atribute value. /// 
 MONSTERS = {
@@ -58,9 +59,9 @@ class Monster:
         return amount
 
     def __str__(self):
-        return (f"Monster type: {self._name}\n"
-                f"HP: {self._hp}/{self._max_hp}\n"
-                f"Attack: {self._attack} | Defense: {self._defense}\n"
+        return (f"Bug Type: {ui.RED}{self._name}{ui.RESET}\n"
+                f"Error Stability: {self._hp}/{self._max_hp}\n"
+                f"Damage Potential: {self._attack} | Debug Resistance: {self._defense}\n"
         )
 
     @property

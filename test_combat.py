@@ -1,9 +1,6 @@
 import combat
 import player
-import main
 import monster
-import world
-import pytest
 
 
 # using monkepatch to set value(so test is possible) instead of using random value.

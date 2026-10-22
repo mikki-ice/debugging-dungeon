@@ -131,8 +131,8 @@ class Map:
                         mini_map += "  "
             mini_map += "\n"
         # map legend
-        mini_map += ui.GREEN + "> " + ui.RESET + " - Player\n"
-        mini_map += ui.RED + "██" + ui.RESET + " - Final Boss\n" 
+        mini_map += ui.GREEN + "< " + ui.RESET + " - " + ui.GREEN +"You (Debugger)" + ui.RESET + "\n"
+        mini_map += ui.RED + "██" + ui.RESET + " - " + ui.RED + "Critical Bug" + ui.RESET + "\n" 
         return mini_map
 
     # turning face

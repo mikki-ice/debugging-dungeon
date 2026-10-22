@@ -1,3 +1,5 @@
+import ui
+
 class Player:
     def __init__(self, name):
         self._name = name
@@ -79,12 +81,14 @@ class Player:
 
 
     def __str__(self):
-        return (f"Name: {self._name}\n"
-                f"Level: {self._level}\n"
+        return (f"======{ui.GREEN} DEVELOPER STATUS {ui.RESET}======\n"
+                f"Name: {self._name}\n"
+                f"Debugging Level: {self._level}\n"
                 f"Sanity: {self._hp}/{self._max_hp}\n"
-                f"Debug strength: {self._attack} | Defense: {self._defense} | Dexterity: {self._dexterity}\n"
+                f"Debug power: {self._attack} | Error resistance: {self._defense} | Typing speed: {self._dexterity}\n"
                 f"Python Experience: {self._xp}/{self.xp_to_next}\n"
-                f"Coffee available: {self._hp_potions}"
+                f"Coffee available: {self._hp_potions}\n"
+                f"=============================="
         )
 
 

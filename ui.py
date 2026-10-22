@@ -5,11 +5,12 @@ YELLOW = "\033[38;2;255;212;59m"
 # standard colors
 GREEN = "\033[92m"
 RED = "\033[91m"
+ORANGE = "\033[38;2;255;165;0m"
 
 # player arrow colors = font_color;background_color
 PLAYER = "\033[1;92;47m"
 
-# background
+# logo background
 WHITE = "\033[47m"
 
 # reset to default terminal settings
@@ -25,3 +26,5 @@ def clear_screen():
 if __name__ == "__main__":    
     clear_screen()
     print("\033[38;2;255;212;59m yellow \033[0m reseted")
+
+    print(f"{ORANGE}this is bright orange{RESET}")
