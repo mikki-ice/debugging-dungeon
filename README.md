@@ -1,5 +1,5 @@
 # CS50P: Debugging Dungeon
-#### Video Demo:  <URL>
+#### Video Demo:  <https://youtu.be/s6oeTu6zhj0>
 
 ## Description
 Debugging Dungeon is a simple text-based RPG with a map navigation and random combat encounters. 
