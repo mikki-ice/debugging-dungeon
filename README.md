@@ -1,5 +1,5 @@
 # CS50P: Debugging Dungeon
-#### Video Demo:  <LATER>
+#### Video Demo:  <URL>
 
 ## Description
 Debugging Dungeon is a simple text-based RPG with a map navigation and random combat encounters. 
@@ -7,9 +7,9 @@ Debugging Dungeon is a simple text-based RPG with a map navigation and random co
 Game story is about CS50P students who have finally finished their Final Project and are running pytest as a final check before submission. Suddenly, their code became self-aware! They got trapped inside their own Final Project! Main game objective is to debug code and terminate The Infinite Loop.
 
 ## Gameplay
-The player navigates a predefined map shaped like Python logo, using [W] to move forward and [A]/[D] to turn. While exploring, there is a 10% chance for random encounter after every succesful step. Random encounters are a fights between player and game bugs (monsters). 
+The player navigates a predefined map shaped like Python logo, using [W] to move forward and [A]/[D] to turn. While exploring, there is a 10% chance for random encounter after every successful step. Random encounters are a fights between player and game bugs (monsters). 
 
-Each round starts with player choosing an action: [A] fight, [H] heal, [R] run away. Then monster attacks, and the next round begins. Combat loop ends after victory, defeat or successful escape. The player win the game by reaching the final boss tile and successfully terminating The Infinite Loop.
+Each round starts with player choosing an action: [A] fight, [H] heal, [R] run away. Then monster attacks, and the next round begins. Combat loop ends after victory, defeat or successful escape. The player wins the game by reaching the final boss tile and successfully terminating The Infinite Loop.
 
 ### Controls
 
@@ -36,10 +36,10 @@ Critical chance is calculated by multiplying attacker's dexterity by 0.5 to get 
 Dodge is calculated by adding 3 to defender's dexterity, but max 50% chance to dodge.
 ### Python Experience (XP) and leveling
         
-After each succesful bug termination, player is awarded some Python Experience. Once enough XP has been collected, player levels up. Each level up restores player's Sanity and increases their combat statistics.
+After each successful bug termination, player is awarded some Python Experience. Once enough XP has been collected, player levels up. Each level up restores player's Sanity and increases their combat statistics.
 ### Coffee and healing
 
-Player can use a coffee during combat as a way to regenerate percentage of Sanity (health). Its possible to carry max two coffees. After every four  succesful steps on the map, one used coffee is regenerated. 
+Player can use a coffee during combat as a way to regenerate percentage of Sanity (health). Its possible to carry max two coffees. After every four  successful steps on the map, one used coffee is regenerated. 
 ### Final boss
 
 Final boss uses same mechanics as regular encounters. The only difference is that, because its an Infinite Loop, player cannot run away from a fight. After terminating boss, the game is completed, and our Final Project is finally fixed and bug-free. 

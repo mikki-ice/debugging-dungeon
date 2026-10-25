@@ -60,7 +60,7 @@ def combat_round(character, enemy, action, is_boss = False):
                 status = "game won"
                 events.append(f"{ui.RED}{enemy.name}{ui.RESET} TERMINATED!")
                 events.append(f"{ui.GREEN}Congratulations {character.name}!{ui.RESET}")
-                events.append(f"{ui.GREEN}Your Final Project is succesfuly debugged and submited.{ui.RESET}")
+                events.append(f"{ui.GREEN}Your Final Project is successfuly debugged and submited.{ui.RESET}")
             # regular enemy killed, continue on map
             else:
                 status = "victory"
